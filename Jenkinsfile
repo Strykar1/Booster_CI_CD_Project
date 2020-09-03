@@ -3,25 +3,25 @@ pipeline{
     stages{
         stage('preparation'){
             steps{
-                sh 'git checkout ${env.GIT_BRANCH}'
+                sh "git checkout ${env.GIT_BRANCH}"
             }
         }
         stage('build image'){
             steps{
-                sh 'docker build -f dockerfile . -t ahmedmsadek/jenkinsslave:1.0'
+                sh 'docker build -f dockerfile . -t ahmedmsadek/jenkinsslave:1.0m'
             }
         }
         stage('push image'){
             steps{
-                withCredentials([usernamePassword(credentialsId:"docker",usernameVariable: USERNAME,passwordVariable: PASSWORD)]){
+                withCredentials([usernamePassword(credentialsId:"docker",usernameVariable: 'USERNAME',passwordVariable: 'PASSWORD')]){
                     sh 'docker login --username $USERNAME --password $PASSWORD'
-                    sh 'docker push ahmedmsadek/jenkinsslave:1.0'
+                    sh 'docker push ahmedmsadek/jenkinsslave:1.0m'
                 }
             }
         }
         stage('deploy'){
             steps{
-                sh 'docker run -d -p 8000:8000 ahmedmsadek/jenkinsslave:1.0'
+                sh 'docker run -d -p 8000:8000 ahmedmsadek/jenkinsslave:1.0m'
             }
         }
     }
