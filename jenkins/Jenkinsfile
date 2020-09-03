@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('preparation'){
             steps{
-                sh 'git checkout ${env.GIT_BRANCH}'
+                checkout scm'
             }
         }
         stage('build image'){
