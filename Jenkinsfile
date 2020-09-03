@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('preparation'){
             steps{
-                sh "git checkout ${env.GIT_BRANCH}"
+                sh 'git checkout ${env.GIT_BRANCH}'
             }
         }
         stage('build image'){
@@ -13,7 +13,7 @@ pipeline{
         }
         stage('push image'){
             steps{
-                withCredentials([usernamePassword(credentialsId:"docker",usernameVariable: 'USERNAME',passwordVariable: 'PASSWORD')]){
+                withCredentials([usernamePassword(credentialsId:"docker",usernameVariable: USERNAME,passwordVariable: PASSWORD)]){
                     sh 'docker login --username $USERNAME --password $PASSWORD'
                     sh 'docker push ahmedmsadek/jenkinsslave:1.0'
                 }
